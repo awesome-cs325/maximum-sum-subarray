@@ -22,3 +22,12 @@ _As given in the Instructions_
    - [ ] Curve fits
  - [ ] Project Report
 
+## To Use
+All code was tested on Arch Linux (Gnome 3.16) with Python 3.4.3,
+`python-matplotlib` package, and `python-scipy` package.
+
+Runnables:
+ - `src/test.py` : Run the actual test against `MMS_Problems.txt`
+ - `src/graphs.py` : Generate (for now) an inital graph of time vs. complexity for Algorithm 1
+
+Many of the files have a suitable `main()` function for easy testing.
