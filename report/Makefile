@@ -2,14 +2,14 @@ TARGET=project1
 HTML=main_html
 SRC={$TARGET}
 SRC_DIR=../src
-TEST_RUN=../bin/testrun.svg
+TEST_RUN=../bin/testrun.eps
 
 default: pdf
 	rm ${TARGET}.aux ${TARGET}.dvi ${TARGET}.log ${TARGET}.out ${TARGET}.ps
 
 both: pdf html
 
-graph: ${TEST_RUN}
+graph:
 	cd ${SRC_DIR} && python test.py && python graphs.py -s
 
 dvi: ${TARGET}.tex graph 
