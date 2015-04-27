@@ -194,26 +194,73 @@ def algorithm3(array, lower, upper):
     return bestMaxSum
 \end{lstlisting}
 
-The divide and conquer approach is a recursive algorithm that has a base case in which the size of the subarray is 1. If the subarray size is greater than 1, a midpoint is calculated for the divide and the algorithm is recursively called on either half. A helper function is then called that logically merges the two halves. The each subarray has a maximum sum sequence and two maximum sum sequences that start or end on the subarray bounds. If the combination of two subarrays yeilds a summation that is larger than either if the individual summations, that merge is returned. The division portion of the algorithm is $O(log_2(n))$ and the merging portion is $O(1)$.
+The divide and conquer approach is a recursive algorithm that has a base case in which the size of the subarray is 1. If the subarray size is greater than 1, a midpoint is calculated for the divide and the algorithm is recursively called on either half. A helper function is then called that logically merges the two halves. The each subarray has a maximum sum sequence and two maximum sum sequences that start or end on the subarray bounds. If the combination of two subarrays yields a summation that is larger than either if the individual summations, that merge is returned. The division portion of the algorithm is $O(log_2(n))$ and the merging portion is $O(1)$. However, the portion determining the maximum arrays of the subsection are still $O(n^2)$, meaning that this algorithm has the same complexity.
 
 \subsection{Linear-Time}
 
 \begin{lstlisting}
+def maxSumSubarray(array):
+    sbustSum = array[0]
+    bestLower = currLower = 0
+    bestUpper = currUpper = 0
+    currentSum = array[bestLower]
+
+    if len(array) > 1:
+        #loop through all values, appending each to the "array of solved max"
+        for i in range(1, len(array)):
+            if array[i] > curentSum + array[i]:
+                currLower = i
+                currUpper = i
+                currentSum = array[i]
+            else:
+                currUpper = i
+                currentSum += array[i]
+
+            if currentSum > bestSum:
+                bestLower = currLower
+                bestUpper = currUpper
+                bestSum = currentSum
 \end{lstlisting}
 
+The linear-time implementation has a single loop that steps through the elements of the array. Each iteration contains work that is constant time since only simple comparisons are made, so the complexity of this algorithm is $O(n)$.
 
 \section{Proof of Correctness}
 
 \section{Testing}
-testing
+We tested the validity of our algorithms by running each implementation with an input of MSS\_Problems.txt. This file contains an array per line that consists of positive and negative integers. Our test.py program reads in these arrays and stores the corresponding output to MSS\_Solutions.txt where the subarray indices are listed in addition to the maximum sum found. Each of the algorithm implementations produced the same output, suggesting a correct implementation. Trivial input examples where there is a single positive value, all positive values, or an array with a length of one all return correct results on visual inspection.
 
 \section{Experimental Analysis}
-experimental
 
-\section{Extrapolation and Interpretation}
-extrapolation
 \begin{figure}
     \centering
     \includegraphics[width=0.75\textwidth]{../bin/testrun.eps}
 \end{figure}
+
+The figure below displays the performance time of each algorithm as the size of the array grows. The line of best fit for the first and second algorithms is a polynomial of degree 2. The third and fourth Algorithms both have lines of best fit that is linear. However, algorithm 4 growds significantly slower than the divide and conquer algorithm.
+
+\section{Extrapolation and Interpretation}
+\begin{center}
+    \begin{tabular}{|l|c|r|}
+        \hline
+        Algorithm & Trendline & Inverse \\ \hline
+        1 & $2\times10^{-6}x^2-7\times10^{-5}x+0.0007$ & $17.5+2.5\sqrt{80000x-7}$\\ \hline
+        2 & $2\times10^{-8}x^2+6\times10^{-7}x+7\times10^{-6}$ & $-5+\frac{5\sqrt{2000000x-11}}{\sqrt{3}}$\\ \hline
+        3 & $4\times10^{-6}x-6\times10^{-6}$ & $250000(x+6)$ \\ \hline
+        4 & $3\times10^{-7}x+6\times10^{-6}$ & $\frac{20}{3}(500000x-3)$ \\ \hline
+    \end{tabular}
+\end{center}
+
+The graph above shows the equations for the trendlines that match the graphed data. The inverse provides a function $f(x)$ that returns the number of elements required to fill $x$ seconds worth of computation time. Plugging one hour (3600 seconds) into each of the inverse functions reveals how large of an array each of the algorithms can handle in that time.
+
+\begin{center}
+    \begin{tabular}{|l|c|r|}
+        \hline
+        Algorithm & Array Size \\ \hline
+        1 & $42443$ \\ \hline
+        2 & $244944$ \\ \hline
+        3 & $901500000$ \\ \hline
+        4 & $1.2\times10^{10}$ \\ \hline
+    \end{tabular}
+\end{center}
+
 \end{document}

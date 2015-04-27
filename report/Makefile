@@ -12,7 +12,7 @@ both: pdf html
 graph:
 	cd ${SRC_DIR} && python test.py && python graphs.py -s
 
-dvi: ${TARGET}.tex graph 
+dvi: ${TARGET}.tex 
 #	pygmentize the input source file -- THIS NAME SHOULD BE SAFE
 	pygmentize -f latex -o __${TARGET}.tex ${TARGET}.tex
 #	run latex twice to get references correct
